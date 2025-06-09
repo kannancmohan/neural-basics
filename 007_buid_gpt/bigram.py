@@ -5,9 +5,9 @@ from torch.nn import functional as F
 # hyperparameters
 batch_size = 32 # how many independent sequences will we process in parallel?
 block_size = 8 # what is the maximum context length for predictions?
-max_iters = 3000
-eval_interval = 300
-learning_rate = 1e-2
+max_iters = 3000 # training iteration
+eval_interval = 300 # interval at which we evaluate the loss on train and val sets during training
+learning_rate = 1e-2 
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 eval_iters = 200
 
@@ -45,6 +45,8 @@ def get_batch(split):
   x, y = x.to(device), y.to(device) # use cuba 
   return x, y
 
+# function helps you periodically assess how well your model is performing on training & validation data
+# This is crucial for monitoring training progress and detecting overfitting
 @torch.no_grad()
 def estimate_loss():
     out = {}
@@ -55,7 +57,7 @@ def estimate_loss():
             X, Y = get_batch(split)
             logits, loss = model(X, Y)
             losses[k] = loss.item()
-        out[split] = losses.mean()
+        out[split] = losses.mean() # Calculates the average loss over all iterations for the current split ('train' or 'val')
     model.train()
     return out
 
@@ -121,7 +123,8 @@ for iter in range(max_iters):
     optimizer.zero_grad(set_to_none=True) # zero grad
     loss.backward() # backpass
     optimizer.step() # update parameters
-    
+print(loss.item())
+
 #lets see what model can generate after training 
 context = torch.zeros((1, 1), dtype=torch.long, device=device) # basically, 0 is char '\n'. we start with newline to predict the next char and so on
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
