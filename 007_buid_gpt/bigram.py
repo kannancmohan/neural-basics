@@ -4,7 +4,7 @@ from torch.nn import functional as F
 
 # hyperparameters
 batch_size = 32 # how many independent sequences will we process in parallel?
-block_size = 8 # what is the maximum context length for predictions?
+ctx_len = 8 # what is the maximum context length for predictions?
 max_iters = 3000 # training iteration
 eval_interval = 300 # interval at which we evaluate the loss on train and val sets during training
 learning_rate = 1e-2 
@@ -38,10 +38,10 @@ val_data = data[n:]
 # method to generate random batch of inputs and target data.
 def get_batch(split):
   data = train_data if split == 'train' else val_data
-  ix = torch.randint(len(data) - block_size, (batch_size,)) # generates batch_size (4) random integers.
+  ix = torch.randint(len(data) - ctx_len, (batch_size,)) # generates batch_size (4) random integers.
   # generate input and output sequence based on above 4 random integers
-  x = torch.stack([data[i:i+block_size] for i in ix]) # rows of input sequence
-  y = torch.stack([data[i+1:i+block_size+1] for i in ix]) # rows of output sequence
+  x = torch.stack([data[i:i+ctx_len] for i in ix]) # rows of input sequence
+  y = torch.stack([data[i+1:i+ctx_len+1] for i in ix]) # rows of output sequence
   x, y = x.to(device), y.to(device) # use cuba 
   return x, y
 
