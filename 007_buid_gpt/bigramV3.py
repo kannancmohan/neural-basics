@@ -79,15 +79,15 @@ class Head(nn.Module):
   def forward(self, x):
       B,T,C = x.shape
       # forward through query,key and value
-      k = self.key(x)   # (B,T,C)
-      q = self.query(x) # (B,T,C)
-      v = self.value(x) # (B,T,C)
+      k = self.key(x)   # (B,T,head_size)
+      q = self.query(x) # (B,T,head_size)
+      v = self.value(x) # (B,T,head_size)
       # compute attention scores ("affinities")
-      wei = q @ k.transpose(-2,-1) * C**-0.5 # (B, T, C) @ (B, C, T) -> (B, T, T)
+      wei = q @ k.transpose(-2,-1) * C**-0.5 # (B, T, head_size) @ (B, head_size, T) -> (B, T, T)
       wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf')) # (B, T, T)
       wei = F.softmax(wei, dim=-1) # (B, T, T)
       # perform the weighted aggregation of the values
-      out = wei @ v # (B, T, T) @ (B, T, C) -> (B, T, C)
+      out = wei @ v # (B, T, T) @ (B, T, head_size) -> (B, T, head_size)
       return out
 
 # simple Pytorch Bigram model
