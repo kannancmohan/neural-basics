@@ -206,6 +206,9 @@ class BigramLanguageModel(nn.Module):
 model = BigramLanguageModel()
 m = model.to(device)
 
+total_params = sum(p.numel() for p in model.parameters())
+print(f"Total number of parameters in the model: {total_params} or {total_params/1e6}Mil")
+
 # create a PyTorch optimizer - here we using AdamW instead of SGD optimizer
 optimizer = torch.optim.AdamW(m.parameters(), lr=learning_rate)
 
