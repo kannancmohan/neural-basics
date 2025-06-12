@@ -228,6 +228,9 @@ for iter in range(max_iters):
     optimizer.step() # update parameters
 print(loss.item())
 
+# Save the entire model (architecture + weights)
+torch.save(model.state_dict(), "transformer_weights.pt")
+
 #lets see what model can generate after training 
 context = torch.zeros((1, 1), dtype=torch.long, device=device) # basically, 0 is char '\n'. we start with newline to predict the next char and so on
 print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
