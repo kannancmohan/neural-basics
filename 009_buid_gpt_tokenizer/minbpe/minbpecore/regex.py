@@ -22,7 +22,6 @@ class RegexTokenizer:
         
         # convert chunks to byte stream
         ids = [list(chunk.encode("utf-8")) for chunk in text_chunks]
-        
         merged_pairs = {} # dict of (int, int) -> int
         vocab = {idx: bytes([idx]) for idx in range(256)} # dict of int -> bytes
         for i in range(num_merges):
