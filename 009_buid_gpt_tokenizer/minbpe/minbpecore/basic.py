@@ -18,7 +18,7 @@ class BasicTokenizer:
         vocab = {idx: bytes([idx]) for idx in range(256)} # dict of int -> bytes
         for i in range(num_merges):
             consec_pairs = get_consecutive_pairs(ids)
-            top_pair = max(consec_pairs, key=consec_pairs.get)
+            top_pair = max(consec_pairs, key=consec_pairs.get)# find the pair with the highest count
             
             new_idx = 256 + i
             ids = replace_pair(ids, top_pair, new_idx)

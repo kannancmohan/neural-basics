@@ -22,6 +22,7 @@
         devShell = pkgs.mkShell {
           packages = [
             pythonEnv
+            pkgs.tree
           ];
 
           shellHook = ''
