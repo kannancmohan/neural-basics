@@ -175,6 +175,7 @@ class BigramLanguageModel(nn.Module):
         x = tok_emb + pos_emb
         ## feeding to blocks of multi-head attention and its compuation
         x = self.blocks(x)
+        x = self.ln_f(x) # apply final layer norm
         logits = self.lm_head(x)  
 
         if targets is None:
