@@ -5,3 +5,5 @@ matplotlib
 # for exercise 009
 pytest
 regex
+# for exercise 010
+tiktoken
