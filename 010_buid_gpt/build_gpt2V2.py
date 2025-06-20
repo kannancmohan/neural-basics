@@ -191,7 +191,8 @@ class CausalSelfAttention(nn.Module):
     
     
 #---------------- sample from model ------------#
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
+device = 'cuda' if torch.cuda.is_available() else ('mps' if torch.backends.mps.is_available() and torch.backends.mps.is_built() else 'cpu')
+print(f'{device=}')
 num_return_sequences = 5
 max_length = 30
 

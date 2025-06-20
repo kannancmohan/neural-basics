@@ -7,3 +7,4 @@ pytest
 regex
 # for exercise 010
 tiktoken
+transformers
