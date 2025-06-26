@@ -76,15 +76,19 @@ def main():
                 split = "val" if shard_index == 0 else "train"
                 filename = os.path.join(DATA_CACHE_DIR, f"edufineweb_{split}_{shard_index:06d}")
                 # split the document into whatever fits in this shard; the remainder goes to next one
-                remainder = shard_size - token_count
-                progress_bar.update(remainder)
-                all_tokens_np[token_count:token_count+remainder] = tokens[:remainder]
+                remainder_len = shard_size - token_count
+                all_tokens_np[token_count:token_count+remainder_len] = tokens[:remainder_len]
                 write_datafile(filename, all_tokens_np)
+
+                if progress_bar is not None:
+                    progress_bar.update(remainder_len)
+                    progress_bar.close() # Explicitly close the progress bar for the completed shard
+
                 shard_index += 1
                 progress_bar = None
                 # populate the next shard with the leftovers of the current doc
-                all_tokens_np[0:len(tokens)-remainder] = tokens[remainder:]
-                token_count = len(tokens)-remainder
+                all_tokens_np[0:len(tokens)-remainder_len] = tokens[remainder_len:]
+                token_count = len(tokens)-remainder_len
 
         # write any remaining tokens as the last shard
         if token_count != 0:
