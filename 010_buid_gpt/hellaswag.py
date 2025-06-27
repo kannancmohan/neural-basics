@@ -76,6 +76,7 @@ def download_file(url: str, fname: str, chunk_size=1024):
 
 # render/transform example from Hellaswag
 enc = tiktoken.get_encoding("gpt2")
+
 def render_example(example):
     """
     Prepares a single HellaSwag example for a language model.
