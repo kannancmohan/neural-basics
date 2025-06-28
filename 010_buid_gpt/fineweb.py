@@ -47,10 +47,11 @@ def tokenize(doc):
 def write_datafile(filename, tokens_np):
     """ Saves the numpy array of tokens to a file"""
     np.save(filename, tokens_np)
+    
 ## process the downloaded dataset by tokenizing its documents and saving them into multiple binary files (shards) ##
 # The dataset is split into shards of approximately 100M tokens each.
 # The first shard (shard_index 0) is designated as the validation set, and all subsequent shards are for training.
-def main():
+def process_dataset():
     shard_size = int(1e8) # 100M tokens per shard,so total of 100 shards
     nprocs = max(1, os.cpu_count()//2) # Use all available cores, but leave one free for the OS and main process
     print(f"Using {nprocs} processes for tokenization.")
@@ -103,4 +104,4 @@ if __name__ == "__main__":
     # especially on macOS or Windows, or in environments like Nix where 'fork' might be restricted.
     # 'spawn' is generally safer and more portable.
     mp.set_start_method("spawn", force=True) # Uncomment if you face persistent issues
-    main()
+    process_dataset()
