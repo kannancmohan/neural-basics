@@ -20,14 +20,14 @@ import numpy as np
 from tqdm import tqdm
 
 
-## create the local cache directory if it doesn't exist yet ##
+## create fineweb shard directory it doesn't exist yet ##
 local_dir = "edu_fineweb10B"
-DATA_CACHE_DIR = os.path.join(os.path.dirname(os.getcwd()), local_dir)
-os.makedirs(DATA_CACHE_DIR, exist_ok=True) # DATA_CACHE_DIR specify the directory where datasets will be cached when using datasets library
-print(DATA_CACHE_DIR)
+DATA_CACHE_DIR = os.path.join(os.getcwd(), local_dir)
+os.makedirs(DATA_CACHE_DIR, exist_ok=True)
+print("Fineweb shard directory", DATA_CACHE_DIR)
 
 ## download the dataset from huggingface ##
-print("huggingface cache directory", datasets.config.HF_DATASETS_CACHE)
+print("Huggingface cache directory", datasets.config.HF_DATASETS_CACHE)
 remote_name = "sample-10BT"
 fw = load_dataset("HuggingFaceFW/fineweb-edu", name=remote_name, split="train")# downloading only the training portion of the dataset, instead of all available splits.
 

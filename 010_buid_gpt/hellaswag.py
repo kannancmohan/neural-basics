@@ -35,7 +35,7 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 
-DATA_CACHE_DIR = os.path.join(os.path.dirname(os.getcwd()), "hellaswag")
+DATA_CACHE_DIR = os.path.join(os.getcwd(), "hellaswag")
 hellaswags = {
     "train": "https://raw.githubusercontent.com/rowanz/hellaswag/master/data/hellaswag_train.jsonl",
     "val": "https://raw.githubusercontent.com/rowanz/hellaswag/master/data/hellaswag_val.jsonl",
@@ -77,7 +77,7 @@ def download_file(url: str, fname: str, chunk_size=1024):
 # render/transform example from Hellaswag
 enc = tiktoken.get_encoding("gpt2")
 
-def render_example(example):
+def render_hellaswag_example(example):
     """
     Prepares a single HellaSwag example for a language model.
     Args:
