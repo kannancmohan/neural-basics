@@ -102,5 +102,5 @@ if __name__ == "__main__":
     # It's good practice to explicitly set the start method if you encounter issues,
     # especially on macOS or Windows, or in environments like Nix where 'fork' might be restricted.
     # 'spawn' is generally safer and more portable.
-    # mp.set_start_method("spawn", force=True) # Uncomment if you face persistent issues
+    mp.set_start_method("spawn", force=True) # Uncomment if you face persistent issues
     main()
