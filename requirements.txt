@@ -1,4 +1,4 @@
-torch==2.6.0
+torch==2.7.0
 numpy
 pandas
 matplotlib
@@ -8,3 +8,5 @@ regex
 # for exercise 010
 tiktoken
 transformers
+datasets
+tqdm
