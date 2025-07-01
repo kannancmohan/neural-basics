@@ -9,6 +9,7 @@ import sys
 import torch
 import numpy as np
 import math
+import tiktoken
 from dataclasses import dataclass
 import torch.nn as nn
 from torch.nn import functional as F
@@ -330,6 +331,8 @@ def get_cuda_details():
         print("BF16 support in CUDA:", torch.cuda.is_bf16_supported())
 
 ##--------TRAIN THE MODEL()-------- ##
+enc = tiktoken.get_encoding("gpt2")
+eot = enc._special_tokens['<|endoftext|>']
 get_cuda_details()
 
 invoke_eval = True
